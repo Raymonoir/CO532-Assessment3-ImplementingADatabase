@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>colorIndex</key>
+			<integer>4</integer>
+			<key>database</key>
+			<string>rw468</string>
+			<key>host</key>
+			<string>dragon.kent.ac.uk</string>
+			<key>kcid</key>
+			<string>2667518700061818494</string>
+			<key>name</key>
+			<string>dragon</string>
+			<key>password</key>
+			<string>phory7f</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>ssh_host</key>
+			<string>raptor.kent.ac.uk</string>
+			<key>ssh_keyLocation</key>
+			<string></string>
+			<key>ssh_keyLocationEnabled</key>
+			<integer>0</integer>
+			<key>ssh_password</key>
+			<string>LoNdoN./.3009+-</string>
+			<key>ssh_user</key>
+			<string>rw468</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPSSHTunnelConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>rw468</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {942, 758}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER
+
+);
+
+CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255)
+ 
+
+);
+CREATE TABLE School (
+
+	SchoolID INTEGER PRIMARY KEY,
+ 	Address VARCHAR(255)
+
+);
+CREATE TABLE AdminStaff (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	Role VARCHAR(255),
+ 	SchoolID INTEGER
+
+);
+CREATE TABLE Instructor (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	SchoolID INTEGER,
+ 	CarID INTEGER
+
+);
+
+CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER
+
+);
+
+
+CREATE TABLE Lesson (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER
+
+);
+CREATE TABLE Test (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER,
+ 	CentreID INTEGER,
+ 	Status VARCHAR(50),
+ 	Reason VARCHAR(255)
+
+);
+</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>178.5</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER,
+
+)</string>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER,
+
+);
+CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255)
+ 
+
+);
+CREATE TABLE School (
+
+	SchoolID INTEGER PRIMARY KEY,
+ 	Address VARCHAR(255)
+
+);
+CREATE TABLE AdminStaff (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	Role VARCHAR(255),
+ 	SchoolID INTEGER
+
+);
+CREATE TABLE Instructor (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	SchoolID INTEGER,
+ 	CarID INTEGER
+
+);
+CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER
+
+);
+CREATE TABLE Lesson (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER
+
+);
+CREATE TABLE Test (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER,
+ 	CentreID INTEGER,
+ 	Status VARCHAR(50),
+ 	Reason VARCHAR(255)
+
+)</string>
+		<string>CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255)
+ 
+
+)</string>
+		<string>CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER,
+
+)</string>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER,
+
+);
+CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255),
+ 
+
+);
+CREATE TABLE School (
+
+	SchoolID INTEGER PRIMARY KEY,
+ 	Address VARCHAR(255),
+
+);
+CREATE TABLE AdminStaff (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	Role VARCHAR(255),
+ 	SchoolID INTEGER
+
+);
+CREATE TABLE Instructor (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	SchoolID INTEGER,
+ 	CarID INTEGER
+
+);
+CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER,
+
+);
+CREATE TABLE Lesson (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER
+
+);
+CREATE TABLE Test (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER,
+ 	CentreID INTEGER,
+ 	Status VARCHAR(50),
+ 	Reason VARCHAR(255)
+
+)</string>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER,
+
+)
+
+CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255),
+ 
+
+)
+CREATE TABLE School (
+
+	SchoolID INTEGER PRIMARY KEY,
+ 	Address VARCHAR(255),
+
+)
+CREATE TABLE AdminStaff (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	Role VARCHAR(255),
+ 	SchoolID INTEGER
+
+)
+CREATE TABLE Instructor (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	SchoolID INTEGER,
+ 	CarID INTEGER
+
+)
+CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER,
+
+)
+CREATE TABLE Lesson (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER
+
+)
+CREATE TABLE Test (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER,
+ 	CentreID INTEGER,
+ 	Status VARCHAR(50),
+ 	Reason VARCHAR(255)
+
+)</string>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER
+
+);
+CREATE TABLE Car (
+
+	CarID INTEGER PRIMARY KEY,
+ 	RegNo VARCHAR(255),
+ 	Model VARCHAR(255),
+ 
+
+);
+CREATE TABLE School (
+
+	SchoolID INTEGER PRIMARY KEY,
+ 	Address VARCHAR(255),
+
+);
+CREATE TABLE AdminStaff (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	Role VARCHAR(255),
+ 	SchoolID INTEGER
+
+);
+CREATE TABLE Instructor (
+
+	EmpID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	SchoolID INTEGER,
+ 	CarID INTEGER
+
+);
+CREATE TABLE Client (
+
+	ClientID INTEGER PRIMARY KEY,
+ 	Forename VARCHAR(255),
+ 	Surname VARCHAR(255),
+ 	Gender CHAR(1),
+ 	DOB DATE,
+ 	PhoneNum INTEGER,
+ 	Address VARCHAR(255),
+ 	LicenceNo INTEGER,
+ 	ProvLicenceNo INTEGER,
+
+);
+CREATE TABLE Lesson (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER
+
+);
+CREATE TABLE Test (
+
+	OnDate DATE,
+ 	OnTime TIME,
+ 	ClientID INTEGER,
+ 	EmpID INTEGER,
+ 	CentreID INTEGER,
+ 	Status VARCHAR(50),
+ 	Reason VARCHAR(255)
+
+)</string>
+		<string>CREATE TABLE Centre (
+
+	CentreID INTEGER PRIMARY KEY,
+ 	Name VARCHAR(255),
+ 	Address VARCHAR(255),
+ 	PhoneNumber INTEGER
+
+
+
+
+
+)</string>
+		<string>CREATE TABLE customer (
+ cid CHAR(4) PRIMARY KEY,
+ firstName VARCHAR(255),
+ lastName VARCHAR(255),
+ gender CHAR(1) CHECK ( gender IN ('F', 'M') ),
+ town VARCHAR(255)
+);
+CREATE TABLE hotel (
+ hid CHAR(4) PRIMARY KEY,
+ name VARCHAR(255),
+ town VARCHAR(255),
+ UNIQUE(name, town)
+);
+CREATE TABLE room (
+ hid CHAR(4),
+ num INTEGER CHECK (num &gt; 0),
+ type CHAR(6) CHECK (type IN ('Single','Double','Family')),
+ PRIMARY KEY (hid, num),
+ FOREIGN KEY (hid) REFERENCES hotel (hid)
+)</string>
+		<string>CREATE TABLE customer (
+ cid CHAR(4) PRIMARY KEY,
+ firstName VARCHAR(255),
+ lastName VARCHAR(255),
+ gender CHAR(1) CHECK ( gender IN ('F', 'M') ),
+ town VARCHAR(255)
+)</string>
+		<string>SELECT IF(COUNT(*) &gt; 0, 'true', 'false') AS answer FROM Users WHERE username = 'kris' AND password = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'</string>
+		<string>SELECT IF(COUNT(*) &gt; 0, 'true', 'false') AS answer FROM Users WHERE username = 'ben' AND password = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'</string>
+		<string>SELECT IF(COUNT(*) &gt; 0, 'true', 'false') AS answer FROM Users WHERE username = 'ben' AND password = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd'</string>
+		<string>SELECT EXISTS (SELECT * FROM Users WHERE username = 'ben' AND password = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8')</string>
+		<string>SELECT EXISTS (SELECT * FROM Users WHERE username = 'ben' AND password = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd')</string>
+		<string>SELECT EXISTS (SELECT * FROM Users WHERE username = 'ben' AND password = 'hello')</string>
+		<string>INSERT INTO User_Follows (follower_username, followed_username) VALUES "kris", "sam"</string>
+		<string>INSERT INTO User_Follows (follower_username, followed_username) VALUES kris, sam</string>
+		<string>INSERT INTO User_Follows (follower_username, followed_username) VALUES (SELECT username FROM Users WHERE username = 'kris'), (SELECT username FROM Users WHERE username = 'sam')</string>
+		<string>INSERT INTO User_Follows (follower_username, followed_username) VALUES (SELECT * FROM Users WHERE username = 'kris'), (SELECT * FROM Users WHERE username = 'sam')</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.7.28-0ubuntu0.18.04.4</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
