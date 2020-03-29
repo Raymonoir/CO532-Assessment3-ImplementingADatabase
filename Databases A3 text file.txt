@@ -1,0 +1,180 @@
+/*
+USER: rw468
+Pass: opscal#
+*/
+
+
+DROP TABLE IF EXISTS Lesson;
+DROP TABLE IF EXISTS Test;
+DROP TABLE IF EXISTS AdminStaff;
+DROP TABLE IF EXISTS Instructor;
+DROP TABLE IF EXISTS Centre;
+DROP TABLE IF EXISTS Car;
+DROP TABLE IF EXISTS Client;
+DROP TABLE IF EXISTS School;
+
+
+
+CREATE TABLE School (
+SchoolID    CHAR(3)    PRIMARY KEY,
+SchoolAddress CHAR(255)   NOT NULL
+);
+
+CREATE TABLE Centre (
+    CentreID CHAR(3) PRIMARY KEY,
+    cName VARCHAR(255) NOT NULL,
+    cAddress VARCHAR(255) NOT NULL,
+    PhoneNo VARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE Client(
+    ClientID CHAR(3) PRIMARY KEY,
+    forename VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    dob DATE NOT NULL,
+    phoneNo VARCHAR(30) NOT NULL,
+    cAddress VARCHAR(255) NOT NULL,
+    provLicenseNo VARCHAR(20) NOT NULL,
+    UNIQUE(provLicenseNo)
+);
+
+create TABLE AdminStaff(
+    EmpID CHAR(4) PRIMARY KEY,
+    forename VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    phoneNo VARCHAR(30) NOT NULL,
+    aAddress VARCHAR(255) NOT NULL,
+    aRole VARCHAR(20) NOT NULL,
+    SchoolID CHAR(3) NOT NULL,
+    FOREIGN KEY (SchoolID) REFERENCES school (SchoolID)
+);
+
+
+
+
+CREATE TABLE Car(
+    CarID CHAR(3) PRIMARY KEY,
+    regNo VARCHAR(10) NOT NULL, --Some license plates go up to 10 characters outside of UK
+    model VARCHAR(255) NOT NULL,
+    UNIQUE(regNo)
+);
+
+CREATE TABLE Instructor(
+    EmpID CHAR(4) PRIMARY KEY,
+    forename VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    phoneNo VARCHAR(30) NOT NULL,
+    iAddress VARCHAR(255) NOT NULL,
+    licenseNo VARCHAR(20) NOT NULL,
+    SchoolID CHAR(3) NOT NULL,
+    CarID CHAR(3) NOT NULL,
+    UNIQUE(CarID, licenseNo), --Each instructor has their own car and unique license number
+    FOREIGN KEY (SchoolID) REFERENCES school (SchoolID),
+    FOREIGN KEY (CarID) REFERENCES car (CarID)
+);
+
+CREATE TABLE Lesson(
+    onDate DATE NOT NULL,
+    onTime TIME NOT NULL,
+    clientID CHAR(3) NOT NULL,
+    empID CHAR(4) NOT NULL,
+    PRIMARY KEY (onDate,onTime),
+    FOREIGN KEY (clientID) REFERENCES client (clientID),
+    FOREIGN KEY (empID) REFERENCES instructor (empID),
+    UNIQUE(onDate,onTime,empID)
+);
+
+CREATE TABLE Test(
+    onDate DATE NOT NULL,
+    onTime TIME NOT NULL,
+    clientID CHAR(3) NOT NULL,
+    empID CHAR(4) NOT NULL,
+    CentreID CHAR(3) NOT NULL,
+    tStatus VARCHAR(10) CHECK ( tStatus IN ('Not Taken', 'Passed', 'Failed') ),
+    reason VARCHAR(255),
+    PRIMARY KEY (onDate,onTime,clientID),
+    FOREIGN KEY (clientID) REFERENCES client (clientID),
+    FOREIGN KEY (empID) REFERENCES instructor (empID),
+    FOREIGN KEY (CentreID) REFERENCES centre (CentreID),
+    UNIQUE(onDate,onTime,empID)
+);
+
+INSERT INTO Centre 
+VALUES 
+('001','Canterbury','12 Meryl Street', '+44 1227-968-5287'),
+('002','Whitstable','5 The Strand, Whitstable','01227457012'),
+('003','Faversham','1 High Street','01795 865129');
+
+INSERT INTO Car
+VALUES 
+('124','BD51 SMR','VW Polo'),
+('653','WS62 QWE','Ford Focus'),
+('912','FD52 TGF','VW Polo'),
+('167','FD52 YTR','VW Polo');
+
+INSERT INTO School
+VALUES 
+('001','12 Whitechapel, Canterbury'),
+('002','9 Middle Wall, Whitstable ');
+
+INSERT INTO AdminStaff
+VALUES
+('1006','Fred','Grimes','M','012275435665','27 Cherry Street','assistant','002'),
+('1009','Jill','Joffries','F','+44776618645','27 Cherry Street','manager','001'),
+('1019','Justine','Joffries','F','(01227) 812035','19 Creosote Road','assistant','001');
+
+INSERT INTO Instructor
+VALUES 
+('2009','James','Joffries','M','012275435665','27 Cherry Street','FTR76398','001','124'),
+('2011','Jim','Adams','M','065490125674','4 The Vale','TGY98555a','002','912'),
+('2013','Trinny','Vair','F','0044587208725','17 High Street, Chartham','YHF7665467','001','653');
+
+INSERT INTO Client
+VALUES 
+('001','Andy','Twill','M','1998-02-01','0044678412349876','27 Cherry Street, CT4 7NF','TYH7890'),
+('002','Sue','Adams','F','1989-06-14','0841-234-876','45 Eggy Lane','CIO67891'),
+('003','Jean','Adams','F','2001-11-19','01227765329','4 Harkness Lane, Canterbury','RTY678923');
+
+INSERT INTO Lesson
+VALUES 
+('2017-06-24','10:00:00','001','2011'),
+('2019-06-07','10:00:00','002','2009'),
+('2017-07-12','14:00:00','001','2011'),
+('2017-08-19','16:00:00','001','2011'),
+('2020-08-17','16:00:00','002','2011'),
+('2020-08-01','14:00:00','001','2009');
+
+INSERT INTO Test
+VALUES
+('2018-03-01','11:00:00','001','2009','002','Passed','null'),
+('2019-08-13','13:00:00','002','2011','003','Failed','Lack of Observation'),
+('2019-10-21','11:00:00','002','2011','002','Failed','Speeding'),
+('2020-08-19','10:00:00','002','2009','002','Not Taken','null');
+
+
+-- 2.1
+SELECT l.onDate, l.onTime, i.surname
+FROM Lesson l
+LEFT JOIN Instructor i ON i.empid=l.empid 
+WHERE i.iAddress LIKE '%Cherry%'
+AND i.iAddress LIKE '%Street';
+
+--2.2
+SELECT t.tstatus, COUNT(t.tstatus) AS "status_number"
+FROM Test t 
+LEFT JOIN Client c ON c.clientid=t.clientid
+WHERE c.gender = 'F'
+GROUP BY t.tstatus;
+--The outer left join returns NULL for tests without a
+--status and COUNT will not count NULL values so a table
+--with zero. So the query will only display when 1+ 
+--female test status(s) are in the database.
+
+--2.3
+SELECT empid,forename,surname FROM Instructor WHERE surname = 'Joffries'
+UNION 
+SELECT empid,forename,surname FROM AdminStaff WHERE surname = 'Joffries';
