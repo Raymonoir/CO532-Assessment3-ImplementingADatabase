@@ -15,10 +15,6 @@ DROP TABLE IF EXISTS School;
 
 
 
-CREATE TABLE School (
-SchoolID    CHAR(3)    PRIMARY KEY,
-SchoolAddress CHAR(255)   NOT NULL
-);
 
 CREATE TABLE Centre (
     CentreID CHAR(3) PRIMARY KEY,
@@ -28,19 +24,24 @@ CREATE TABLE Centre (
 );
 
 
-CREATE TABLE Client(
-    ClientID CHAR(3) PRIMARY KEY,
-    forename VARCHAR(255) NOT NULL,
-    surname VARCHAR(255) NOT NULL,
-    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
-    dob DATE NOT NULL,
-    phoneNo VARCHAR(30) NOT NULL,
-    cAddress VARCHAR(255) NOT NULL,
-    provLicenseNo VARCHAR(20) NOT NULL,
-    UNIQUE(provLicenseNo)
+
+CREATE TABLE Car(
+    CarID CHAR(3) PRIMARY KEY,
+    regNo VARCHAR(10) NOT NULL, --Some license plates go up to 10 characters outside of UK
+    model VARCHAR(255) NOT NULL,
+    UNIQUE(regNo)
 );
 
-create TABLE AdminStaff(
+
+
+CREATE TABLE School (
+SchoolID    CHAR(3)    PRIMARY KEY,
+SchoolAddress CHAR(255)   NOT NULL
+);
+
+
+
+CREATE TABLE AdminStaff(
     EmpID CHAR(4) PRIMARY KEY,
     forename VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
@@ -53,14 +54,6 @@ create TABLE AdminStaff(
 );
 
 
-
-
-CREATE TABLE Car(
-    CarID CHAR(3) PRIMARY KEY,
-    regNo VARCHAR(10) NOT NULL, --Some license plates go up to 10 characters outside of UK
-    model VARCHAR(255) NOT NULL,
-    UNIQUE(regNo)
-);
 
 CREATE TABLE Instructor(
     EmpID CHAR(4) PRIMARY KEY,
@@ -77,6 +70,22 @@ CREATE TABLE Instructor(
     FOREIGN KEY (CarID) REFERENCES car (CarID)
 );
 
+
+
+CREATE TABLE Client(
+    ClientID CHAR(3) PRIMARY KEY,
+    forename VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    dob DATE NOT NULL,
+    phoneNo VARCHAR(30) NOT NULL,
+    cAddress VARCHAR(255) NOT NULL,
+    provLicenseNo VARCHAR(20) NOT NULL,
+    UNIQUE(provLicenseNo)
+);
+
+
+
 CREATE TABLE Lesson(
     onDate DATE NOT NULL,
     onTime TIME NOT NULL,
@@ -87,6 +96,8 @@ CREATE TABLE Lesson(
     FOREIGN KEY (empID) REFERENCES instructor (empID),
     UNIQUE(onDate,onTime,empID)
 );
+
+
 
 CREATE TABLE Test(
     onDate DATE NOT NULL,
@@ -103,11 +114,14 @@ CREATE TABLE Test(
     UNIQUE(onDate,onTime,empID)
 );
 
+
+
 INSERT INTO Centre 
 VALUES 
 ('001','Canterbury','12 Meryl Street', '+44 1227-968-5287'),
 ('002','Whitstable','5 The Strand, Whitstable','01227457012'),
 ('003','Faversham','1 High Street','01795 865129');
+
 
 INSERT INTO Car
 VALUES 
@@ -116,10 +130,12 @@ VALUES
 ('912','FD52 TGF','VW Polo'),
 ('167','FD52 YTR','VW Polo');
 
+
 INSERT INTO School
 VALUES 
 ('001','12 Whitechapel, Canterbury'),
 ('002','9 Middle Wall, Whitstable ');
+
 
 INSERT INTO AdminStaff
 VALUES
@@ -127,17 +143,20 @@ VALUES
 ('1009','Jill','Joffries','F','+44776618645','27 Cherry Street','manager','001'),
 ('1019','Justine','Joffries','F','(01227) 812035','19 Creosote Road','assistant','001');
 
+
 INSERT INTO Instructor
 VALUES 
 ('2009','James','Joffries','M','012275435665','27 Cherry Street','FTR76398','001','124'),
 ('2011','Jim','Adams','M','065490125674','4 The Vale','TGY98555a','002','912'),
 ('2013','Trinny','Vair','F','0044587208725','17 High Street, Chartham','YHF7665467','001','653');
 
+
 INSERT INTO Client
 VALUES 
 ('001','Andy','Twill','M','1998-02-01','0044678412349876','27 Cherry Street, CT4 7NF','TYH7890'),
 ('002','Sue','Adams','F','1989-06-14','0841-234-876','45 Eggy Lane','CIO67891'),
 ('003','Jean','Adams','F','2001-11-19','01227765329','4 Harkness Lane, Canterbury','RTY678923');
+
 
 INSERT INTO Lesson
 VALUES 
@@ -148,6 +167,7 @@ VALUES
 ('2020-08-17','16:00:00','002','2011'),
 ('2020-08-01','14:00:00','001','2009');
 
+
 INSERT INTO Test
 VALUES
 ('2018-03-01','11:00:00','001','2009','002','Passed','null'),
@@ -155,6 +175,10 @@ VALUES
 ('2019-10-21','11:00:00','002','2011','002','Failed','Speeding'),
 ('2020-08-19','10:00:00','002','2009','002','Not Taken','null');
 
+/*=====================================================================================================*/
+--TASK 2
+
+--RENAME VARIABLES
 
 -- 2.1
 SELECT l.onDate, l.onTime, i.surname
