@@ -1,9 +1,3 @@
-/*
-USER: rw468
-Pass: opscal#
-*/
-
-
 DROP TABLE IF EXISTS Lesson;
 DROP TABLE IF EXISTS Test;
 DROP TABLE IF EXISTS AdminStaff;
@@ -15,19 +9,18 @@ DROP TABLE IF EXISTS School;
 
 
 
-
 CREATE TABLE Centre (
-    CentreID CHAR(3) PRIMARY KEY,
-    cName VARCHAR(255) NOT NULL,
-    cAddress VARCHAR(255) NOT NULL,
-    PhoneNo VARCHAR(30) NOT NULL
+    centreID CHAR(3) PRIMARY KEY,
+    centreName VARCHAR(255) NOT NULL,
+    centreAddress VARCHAR(255) NOT NULL,
+    phoneNo VARCHAR(30) NOT NULL
 );
 
 
 
 CREATE TABLE Car(
-    CarID CHAR(3) PRIMARY KEY,
-    regNo VARCHAR(10) NOT NULL, --Some license plates go up to 10 characters outside of UK
+    carID CHAR(3) PRIMARY KEY,
+    regNo VARCHAR(10) NOT NULL,
     model VARCHAR(255) NOT NULL,
     UNIQUE(regNo)
 );
@@ -35,83 +28,91 @@ CREATE TABLE Car(
 
 
 CREATE TABLE School (
-SchoolID    CHAR(3)    PRIMARY KEY,
-SchoolAddress CHAR(255)   NOT NULL
+    schoolID    CHAR(3)    PRIMARY KEY,
+    schoolAddress CHAR(255)   NOT NULL
 );
 
 
 
 CREATE TABLE AdminStaff(
-    EmpID CHAR(4) PRIMARY KEY,
+    empID CHAR(4) PRIMARY KEY,
     forename VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
-    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    gender CHAR(1) CHECK ( gender IN ('M', 'F','O') ),
     phoneNo VARCHAR(30) NOT NULL,
-    aAddress VARCHAR(255) NOT NULL,
-    aRole VARCHAR(20) NOT NULL,
-    SchoolID CHAR(3) NOT NULL,
-    FOREIGN KEY (SchoolID) REFERENCES school (SchoolID)
+    adminAddress VARCHAR(255) NOT NULL,
+    adminRole VARCHAR(20) NOT NULL,
+    schoolID CHAR(3) NOT NULL,
+    FOREIGN KEY (schoolID) REFERENCES School (schoolID)
 );
 
 
 
 CREATE TABLE Instructor(
-    EmpID CHAR(4) PRIMARY KEY,
+    empID CHAR(4) PRIMARY KEY,
     forename VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
-    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    gender CHAR(1) CHECK ( gender IN ('M', 'F','O') ),
     phoneNo VARCHAR(30) NOT NULL,
-    iAddress VARCHAR(255) NOT NULL,
+    instructorAddress VARCHAR(255) NOT NULL,
     licenseNo VARCHAR(20) NOT NULL,
-    SchoolID CHAR(3) NOT NULL,
-    CarID CHAR(3) NOT NULL,
-    UNIQUE(CarID, licenseNo), --Each instructor has their own car and unique license number
-    FOREIGN KEY (SchoolID) REFERENCES school (SchoolID),
-    FOREIGN KEY (CarID) REFERENCES car (CarID)
+    schoolID CHAR(3) NOT NULL,
+    carID CHAR(3) NOT NULL,
+
+    UNIQUE(carID, licenseNo),
+    FOREIGN KEY (schoolID) REFERENCES School (schoolID),
+    FOREIGN KEY (carID) REFERENCES Car (carID)
 );
 
 
 
 CREATE TABLE Client(
-    ClientID CHAR(3) PRIMARY KEY,
+    clientID CHAR(3) PRIMARY KEY,
     forename VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
-    gender CHAR(1) CHECK ( gender IN ('F', 'M') ), --One character allowed to specify either M,F or O
+    gender CHAR(1) CHECK ( gender IN ('M', 'F','O') ),
     dob DATE NOT NULL,
     phoneNo VARCHAR(30) NOT NULL,
-    cAddress VARCHAR(255) NOT NULL,
+    clientAddress VARCHAR(255) NOT NULL,
     provLicenseNo VARCHAR(20) NOT NULL,
+
     UNIQUE(provLicenseNo)
 );
 
 
 
 CREATE TABLE Lesson(
-    onDate DATE NOT NULL,
-    onTime TIME NOT NULL,
+    lessonDate DATE NOT NULL,
+    lessonTime TIME NOT NULL,
     clientID CHAR(3) NOT NULL,
     empID CHAR(4) NOT NULL,
-    PRIMARY KEY (onDate,onTime),
-    FOREIGN KEY (clientID) REFERENCES client (clientID),
-    FOREIGN KEY (empID) REFERENCES instructor (empID),
-    UNIQUE(onDate,onTime,empID)
+
+    UNIQUE(lessonDate,lessonTime,empID),
+
+    PRIMARY KEY (lessonDate,lessonTime),
+    FOREIGN KEY (empID) REFERENCES Instructor (empID),
+    FOREIGN KEY (clientID) REFERENCES Client (clientID)
+
 );
 
 
 
 CREATE TABLE Test(
-    onDate DATE NOT NULL,
-    onTime TIME NOT NULL,
+    testDate DATE NOT NULL,
+    testTime TIME NOT NULL,
     clientID CHAR(3) NOT NULL,
     empID CHAR(4) NOT NULL,
-    CentreID CHAR(3) NOT NULL,
-    tStatus VARCHAR(10) CHECK ( tStatus IN ('Not Taken', 'Passed', 'Failed') ),
+    centreID CHAR(3) NOT NULL,
+    testStatus VARCHAR(10) CHECK ( testStatus IN ('Failed', 'Passed', 'Not Taken') ),
     reason VARCHAR(255),
-    PRIMARY KEY (onDate,onTime,clientID),
-    FOREIGN KEY (clientID) REFERENCES client (clientID),
-    FOREIGN KEY (empID) REFERENCES instructor (empID),
-    FOREIGN KEY (CentreID) REFERENCES centre (CentreID),
-    UNIQUE(onDate,onTime,empID)
+
+    UNIQUE(testDate,testTime,empID),
+
+    PRIMARY KEY (testDate, testTime, clientID),
+    FOREIGN KEY (clientID) REFERENCES Client (clientID),
+    FOREIGN KEY (empID) REFERENCES Instructor (empID),
+    FOREIGN KEY (centreID) REFERENCES Centre (centreID)
+    
 );
 
 
@@ -178,27 +179,58 @@ VALUES
 /*=====================================================================================================*/
 --TASK 2
 
---RENAME VARIABLES
 
 -- 2.1
-SELECT l.onDate, l.onTime, i.surname
-FROM Lesson l
-LEFT JOIN Instructor i ON i.empid=l.empid 
-WHERE i.iAddress LIKE '%Cherry%'
-AND i.iAddress LIKE '%Street';
+SELECT Lesson.lessonDate, Lesson.lessonTime, Instructor.surname
+FROM Lesson
+LEFT JOIN Instructor 
+ON Lesson.empID = Instructor.empID
+WHERE Instructor.instructorAddress LIKE '%Cherry Street%';
 
---2.2
-SELECT t.tstatus, COUNT(t.tstatus) AS "status_number"
-FROM Test t 
-LEFT JOIN Client c ON c.clientid=t.clientid
-WHERE c.gender = 'F'
-GROUP BY t.tstatus;
---The outer left join returns NULL for tests without a
---status and COUNT will not count NULL values so a table
---with zero. So the query will only display when 1+ 
---female test status(s) are in the database.
 
---2.3
-SELECT empid,forename,surname FROM Instructor WHERE surname = 'Joffries'
+--2.2 
+SELECT Test.testStatus, COUNT(Test.testStatus) AS "statusCount"
+FROM Test 
+LEFT JOIN Client 
+ON Test.clientID = Client.clientID
+WHERE Client.gender = 'F'
+GROUP BY Test.testStatus;
+
+--2.3 
+SELECT empID,forename,surname 
+FROM Instructor 
+WHERE surname = 'Joffries'
 UNION 
-SELECT empid,forename,surname FROM AdminStaff WHERE surname = 'Joffries';
+SELECT empID,forename,surname 
+FROM AdminStaff 
+WHERE surname = 'Joffries';
+
+--2.4
+SELECT schoolAddress, School.schoolID, Instructor.forename, Instructor.surname
+FROM School
+JOIN Instructor 
+ON School.schoolID = Instructor.schoolID
+WHERE Instructor.empID 
+NOT IN (SELECT DISTINCT empID FROM Lesson); 
+
+
+--2.5 
+SELECT centreName, testDate, testTime, testStatus, Client.forename, Client.surname, schoolAddress,Car.model
+FROM Centre
+JOIN Test ON Centre.centreID = Test.centreID
+JOIN Client ON Test.clientID = Client.clientID
+JOIN Instructor ON Test.empID = Instructor.empID
+JOIN Car ON Instructor.carID = Car.carID
+JOIN School ON Instructor.schoolID = School.schoolID
+WHERE centreName LIKE 'Whitstable'
+ORDER BY (Client.surname, Client.forename);
+
+
+--2.6
+
+UPDATE Lesson
+SET empID = (SELECT empID FROM Instructor WHERE forename = 'Jim' AND surname = 'Adams')
+WHERE lessonDate >= '2020-06-12' AND empID = (SELECT empID FROM Instructor WHERE forename = 'James' AND surname = 'Joffries');
+
+--Used to check answer
+--SELECT * FROM Lesson;
